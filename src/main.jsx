@@ -11,7 +11,7 @@ import Login from "./components/Login.jsx";
 import store from "./redux/app/store.js";
 import { Provider } from "react-redux";
 import Home from "./components/Home.jsx";
-import Header from "./components/Header.jsx";
+import Header from "./components/Header";
 
 const router = createBrowserRouter(
   createRoutesFromElements(

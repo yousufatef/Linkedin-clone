@@ -1,18 +1,23 @@
 import styled from "styled-components";
 import { signInAPI } from "../redux/actions";
-import { connect, useDispatch, useSelector } from "react-redux";
+import * as actions from "../redux/actions/actions"
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
+
 const Login = () => {
+  const navigate = useNavigate();
   const dispatch = useDispatch();
   const user = useSelector((state) => state.userState.user);
 
-  // console.log(props.user);
+  const handleSignIn = async () => {
+    const result = await signInAPI();
+    dispatch(actions.setUser(result));
+  }
 
-  // const navigate = useNavigate();
   return (
     <Container>
-      {/* {user && navigate("/home")} */}
+      {user && navigate("/home")}
       <Nav>
         <a href="/index.html">
           <img src="public\assets\login-logo.svg" alt="Linkedin icon" />
@@ -28,7 +33,7 @@ const Login = () => {
           <img src="public\assets\login-hero.svg" alt="login hero" />
         </Hero>
         <Form>
-          <Googel onClick={signInAPI()}>
+          <Googel onClick={handleSignIn}>
             <img src="public\assets\google.svg" alt="google" />
             Sign in with Google
           </Googel>

@@ -23,17 +23,3 @@ export const signOutAPI =  async () =>  {
 }
 
 
-// export const getUserAuth = ()=> {
-//   // to change user account which stored in Redux
-//   return (dispatch) => {
-//     auth.onAuthStateChanged(async (user) => {
-//       if (user) {
-//         dispatch(actions.setUser(user));
-//       }
-//     });
-//   };
-// }
-
-
-
-// // export default { signInAPI, getUserAuth, signOutAPI };

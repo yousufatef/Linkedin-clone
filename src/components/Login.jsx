@@ -14,7 +14,7 @@ const Login = () => {
     const result = await signInAPI();
     dispatch(actions.setUser(result));
   }
-
+  
   return (
     <Container>
       {user && navigate("/home")}
@@ -168,16 +168,4 @@ const Googel = styled.button`
   }
 `;
 
-// const mapStateToProps = (state) => {
-//   return {
-//     user: state.userState.user,
-//   };
-// };
-// const mapDispatchToProps = (dispatch) => {
-//   return {
-//     signIn: () => dispatch(signInAPI()),
-//   };
-// };
-
-// eslint-disable-next-line react-refresh/only-export-components
 export default Login;

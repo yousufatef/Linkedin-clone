@@ -6,3 +6,11 @@ export const setUser = (payload)=>{
         payload: payload,
     }
 }
+export const setLoading = (status)=>({
+        type: actions.SET_LOADING_STATUS,
+        status: status,
+})
+export const getArticles = (payload) => ({
+  type: actions.GIT_ARTICLES,
+  payload: payload,
+});

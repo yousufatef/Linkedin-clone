@@ -1,22 +1,17 @@
-// import { useEffect } from "react";
-// import { connect } from "react-redux";
-// import { useNavigate } from "react-router-dom";
+import { useEffect } from "react";
+import { useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 
-// const RequireAuth = ({ user, children }) => {
-//   const navigate = useNavigate();
-//   useEffect(() => {
-//     if (!user) {
-//       navigate("/", { replace: true });
-//       return;
-//     }
-//   }, [user]);
-//   return children;
-// };
-// const mapStateToProps = (state) => {
-//   return {
-//     user: state.userState.user,
-//   };
-// };
+const RequireAuth = ({children}) => {
+    const navigate = useNavigate();
+    const user = useSelector((state) => state.userState.user);
 
-// // eslint-disable-next-line react-refresh/only-export-components
-// export default connect(mapStateToProps)(RequireAuth);
+    useEffect(() => {
+      if (!user) {
+        navigate("/", { replace: true });
+        return;
+      }
+    }, [navigate, user]);
+    return children;
+}
+export default RequireAuth;

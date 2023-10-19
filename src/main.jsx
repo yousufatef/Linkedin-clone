@@ -10,16 +10,19 @@ import {
 import Login from "./components/Login.jsx";
 import store from "./redux/app/store.js";
 import { Provider } from "react-redux";
-import Home from "./components/Home.jsx";
+import Home from "./components/Home/Home.jsx";
 import Header from "./components/Header";
+import RequireAuth from "./components/RequireAuth.jsx";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
     <Route path="/" element={<App />}>
       <Route index element={<Login />} />
       <Route path="home" element={<>
+      <RequireAuth>
         <Header/>
         <Home />
+      </RequireAuth>
       </>} />
     </Route>
   )

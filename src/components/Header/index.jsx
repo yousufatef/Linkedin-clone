@@ -8,10 +8,10 @@ import { useEffect } from "react";
 
 
 const Header = () => {
-  const dispatch = useDispatch();
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const user = useSelector((state) => state.userState.user);
-
+  
   const handleSignOut = async () => {
     const result = await signOutAPI();
     dispatch(actions.setUser(result));

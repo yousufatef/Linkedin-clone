@@ -1,40 +1,57 @@
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import * as SC from "./Styles";
 import { useState } from "react";
 import ReactPlayer from "react-player";
+import { Timestamp } from "firebase/firestore";
+import * as actions from "../../redux/actions/index";
 
 const PostModal = (props) => {
   const user = useSelector((state) => state.userState.user);
+  const dispatch = useDispatch();
+
   const [editorText, setEditorText] = useState("");
   const [assetArea, setAssetArea] = useState("");
   const [shareImage, setShareImage] = useState("");
   const [videoLink, setVideoLink] = useState("");
 
-
-  const handleChange = (e)=>{
+  const handleChange = (e) => {
     const image = e.target.files[0];
 
-    if(image === "" || image === undefined){
-      alert(`Not an image!, the file is a Not an image!${typeof image}`);
+    if (image === "" || image === undefined) {
+      alert(`not an image , the file is a ${typeof image}`);
+      return;
+    } else {
+      setShareImage(image);
+    }
+  };
+  const handlePostArticles = (e) => {
+    e.preventDefault();
+    if (e.target !== e.currentTarget) {
       return;
     }
-    else{
-      setShareImage(image)
-    }
-  } 
-
+    const payload = {
+      image: shareImage,
+      video: videoLink,
+      user: user,
+      description: editorText,
+      timestamp: Timestamp.now(),
+    };
+    dispatch(actions.postArticleAPI(payload));
+    reset(e);
+  };
+  const switchAssetArea = (area) => {
+    setShareImage("");
+    setVideoLink("");
+    setAssetArea(area);
+  };
   const reset = (e) => {
-    setEditorText(""), setShareImage("");
+    setEditorText("");
+    setShareImage("");
     setVideoLink("");
     setAssetArea("");
     props.handleClick(e);
   };
 
-  const switchAssetArea = (area)=>{
-    setShareImage("")
-    setVideoLink("")
-    setAssetArea(area)
-  }
   return (
     <>
       {props.showModal && (
@@ -83,7 +100,9 @@ const PostModal = (props) => {
                         Select an image to share
                       </label>
                     </p>
-                    {shareImage && <img src={URL.createObjectURL(shareImage)} alt="img" />}
+                    {shareImage && (
+                      <img src={URL.createObjectURL(shareImage)} alt="img" />
+                    )}
                   </SC.UploadImage>
                 ) : (
                   assetArea === "media" && (
@@ -118,7 +137,10 @@ const PostModal = (props) => {
                   Anyone
                 </SC.AssetsButton>
               </SC.ShareComment>
-              <SC.PostButton disabled={!editorText ? true : false}>
+              <SC.PostButton
+                disabled={!editorText ? true : false}
+                onClick={(e) => handlePostArticles(e)}
+              >
                 Post
               </SC.PostButton>
             </SC.ShareCreation>
